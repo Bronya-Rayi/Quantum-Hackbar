@@ -115,16 +115,20 @@ li.dropdown-submenu-item:hover
 .text-box
 {
     display: block;
-    font-size: 13px;
     padding: 10px;
     border: none;
-    width: 400px;
     margin-top: 10px;
     margin-left: 10px;
     box-shadow: var( --b-shadow );
-    resize: none;
+    resize:both;
+    overflow:auto;
     border-bottom: 3px solid #555;
     transition: 0.3s all;
+    width: 70%;
+    word-break: break-all;
+    /* font-size: 13px; */
+    font-size: 14px;
+    font-family: Consolas;
 }
 
 .text-box:focus
@@ -226,3 +230,4 @@ li.dropdown-submenu-item:hover
 {
     display: none;
 }
+
