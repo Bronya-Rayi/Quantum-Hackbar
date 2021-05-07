@@ -1,9 +1,9 @@
 /**
- * Background script to handle POST data & Referer
+ * Background script to handle POST data & header
  */
 
 var postData = [];
-var referer = [];
+var header = [];
 var headers = [];
 
 
@@ -23,9 +23,9 @@ browser.webRequest.onBeforeSendHeaders.addListener(
 );
 
 
-// get referer for each page loaded
+// get header for each page loaded
 browser.webRequest.onSendHeaders.addListener(
-    getReferer,
+    getHeader,
     { urls: ["<all_urls>"], types: ["main_frame"] },
     ["requestHeaders"]
 );
@@ -45,11 +45,11 @@ browser.runtime.onMessage.addListener( ( message, sender, sendResponse ) => {
             });
             break;
 
-        // return referer to devtools panel
-        case 'getReferer':
+        // return header to devtools panel
+        case 'getHeader':
             getCurrentTab().then( tab => {
                 sendResponse({
-                    referer: referer[tab.id] ? referer[tab.id] : ''
+                    header: header[tab.id] ? header[tab.id] : ''
                 });
             });
             break;
@@ -85,21 +85,26 @@ function getPostData( e )
 }
 
 
-// get referer on page load
-function getReferer( e )
+// get header on page load
+function getHeader( e )
 {
     getCurrentTab().then( tab => {
 
+        let headers = [];
+        header[tab.id] = ''
+
         for( let h of e.requestHeaders )
         {
-            if( h.name == 'Referer' )
-            {
-                referer[tab.id] = h.value;
-                return;
-            }
+            
+            header[tab.id] += h.name + ":" + h.value + "\n";
+            // if( h.name == 'header' )
+            // {
+            //     header[tab.id] = "asd\n" + h.value;
+            //     return;
+            // }
         }
 
-        referer[tab.id] = '';
+        // header[tab.id] = '';
     });
 }
 
@@ -109,10 +114,9 @@ function rewriteHeaders( e )
 {
     if( headers.length == 0 )
         return;
-
     // push headers to request
-    for( let h of headers )
-        e.requestHeaders.push( h );
+
+    e.requestHeaders = headers;
 
     // reset headers array
     headers = [];

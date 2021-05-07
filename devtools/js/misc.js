@@ -54,7 +54,7 @@ function loadURL()
         URL = URL.slice( 0, -1 );
         payloadInput.value = decodeURI( URL );
         loadPostData();
-        loadReferer();
+        loadheader();
     });
 }
 
@@ -102,17 +102,17 @@ function loadPostData()
 }
 
 
-// get referer of current page from background script
-function loadReferer()
+// get header of current page from background script
+function loadheader()
 {
     let sending = browser.runtime.sendMessage({
-        action: 'getReferer'
+        action: 'getHeader'
     });
     
     sending.then(
         
         response => {
-            refererInput.value = response.referer
+            headerInput.value = response.header
         },
 
         error => {
@@ -120,6 +120,30 @@ function loadReferer()
         }
 
     );
+}
+
+
+// load enctype
+function loadEnctype()
+{
+    var select = document.getElementById("enctype");
+    var enctype = select.options[select.selectedIndex].value;
+
+    // let sending = browser.runtime.sendMessage({
+    //     action: 'getHeader'
+    // });
+    
+    // sending.then(
+        
+    //     response => {
+    //         headerInput.value = response.header
+    //     },
+
+    //     error => {
+    //         console.error( error );
+    //     }
+
+    // );
 }
 
 
@@ -131,10 +155,23 @@ function executePayload()
     URL = encodeURI( URL );
     URL = URL.replace( /\#/g, '%23' );
 
-    // add referer
-    if( toggleReferer.checked )
-        addHeader( 'Referer', refererInput.value );
+    // add header
+    if( toggleheader.checked )
+    {
+        let headers = headerInput.value.split("\n");
+        let headerName = '';
+        let headerValue = '';
+        for( let h of headers )
+        {
+            headerName = h.substr(0,h.indexOf(':'));
+            headerValue = h.substr(h.indexOf(':') + 1);
 
+            if(headerName == "") continue;
+
+            addHeader( headerName, headerValue );
+        }
+        
+    }
     // Execute regular GET
     if( !togglePostData.checked )
         executeGetPayload( URL );
@@ -158,6 +195,41 @@ function executeGetPayload( URL )
 
 // execute POST payload
 function executePostPayload( URL )
+{
+    // generate random form id
+    let formID = 'quantum-hackbar-' + parseInt( Math.random()*10001 );
+    let form = '<form id="' + formID + '" method="post" action="' + URL + '">';
+
+    // parse POST fields from input
+    let postFields = [];
+    let postData = removeNewLines( postDataInput.value );
+    postData = postData.split( '&' );
+
+    postData.forEach( obj => {
+
+        obj = obj.split( '=' );
+
+        postFields.push({
+            field: obj[0],
+            value: obj[1] ? obj[1] : '',
+        });
+    });
+
+    // append POST inputs to form
+    postFields.forEach( obj => {;
+        form += '<input type="hidden" name="' + obj.field + '" value="' + obj.value + '" />';
+    });
+
+    form += '</form>';
+
+    // append form to page & submit it
+    exec( 'document.body.innerHTML += \'' + form + '\'' );
+    exec( 'document.querySelector( "#'+formID+'" ).submit()' );
+}
+
+
+// execute Raw POST payload
+function executeRawPostPayload( URL )
 {
     // generate random form id
     let formID = 'quantum-hackbar-' + parseInt( Math.random()*10001 );

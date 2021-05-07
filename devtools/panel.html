@@ -165,8 +165,8 @@
             </ul>
 
             <textarea class="payload text-box" placeholder="Payload"></textarea>
-        
-            <div class="buttons">
+            <br>
+            <div class="buttons inline">
                 <button class="load-url-btn">
                     Load URL
                 </button>
@@ -179,6 +179,19 @@
                     Execute!
                 </button>
             </div>
+            
+            <!-- <div class="inline">
+                Enctype: 
+                <div class="select">
+                    <select id="enctype" onchange="loadEnctype()">
+                        <option value="application/x-www-form-urlencoded" selected >application/x-www-form-urlencoded</option>
+                        <option value="application/x-www-form-urlencoded(raw)">application/x-www-form-urlencoded(raw)</option>
+                        <option value="application/json">application/json</option>
+                        <option value="audi"><a href="javascript:console.log('asd');">Base64 Encode</a></option>
+                    </select>
+                </div>
+            </div> -->
+            
 
             <div class="switches">
                 <input type="checkbox" id="toggle-post-data" class="switch" />
@@ -186,13 +199,11 @@
                 
                 &nbsp;&nbsp;
                 
-                <input type="checkbox" id="toggle-referer" class="switch" />
-                <label for="toggle-referer"> Referer</label>
+                <input type="checkbox" id="toggle-header" class="switch" />
+                <label for="toggle-header"> header</label>
             </div>
-
-            <textarea class="post-data text-box hidden" placeholder="POST Data"></textarea>
-            
-            <textarea class="referer text-box hidden" placeholder="Referer"></textarea>
+            <textarea class="post-data text-box hidden" placeholder="POST Data" style="width: 40%;height: 200px;"></textarea>
+            <textarea class="header text-box hidden" placeholder="Header" style="width: 50%;height: 200px;"></textarea>
         </div>
         
         <script src="js/misc.js"></script>

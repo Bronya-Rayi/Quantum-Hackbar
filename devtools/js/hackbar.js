@@ -4,9 +4,9 @@
 
 let payloadInput = _( '.payload' );
 let postDataInput = _( '.post-data' );
-let refererInput = _( '.referer' );
+let headerInput = _( '.header' );
 let togglePostData = _( '#toggle-post-data' );
-let toggleReferer = _( '#toggle-referer' );
+let toggleheader = _( '#toggle-header' );
 let activeInput = payloadInput;
 
 
@@ -61,7 +61,7 @@ listenClicks( actionButtons );
 // show or hide inputs on toggle change
 let toggles = [
     { toggle: togglePostData, input: postDataInput },
-    { toggle: toggleReferer, input: refererInput }
+    { toggle: toggleheader, input: headerInput }
 ];
 
 for( let t of toggles )

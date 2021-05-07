@@ -17,6 +17,12 @@ html, body
     --secondary-color: #303F9F;
 }
 
+.inline
+{ 
+    display:inline;
+    padding-left: 10px;
+}
+
 .dropdown-menu
 {
     padding: 0;
@@ -114,7 +120,7 @@ li.dropdown-submenu-item:hover
 
 .text-box
 {
-    display: block;
+    display:inline;
     padding: 10px;
     border: none;
     margin-top: 10px;
@@ -124,7 +130,7 @@ li.dropdown-submenu-item:hover
     overflow:auto;
     border-bottom: 3px solid #555;
     transition: 0.3s all;
-    width: 70%;
+    width: 60%;
     word-break: break-all;
     /* font-size: 13px; */
     font-size: 14px;
@@ -158,6 +164,51 @@ li.dropdown-submenu-item:hover
 {
     background-color: var( --secondary-color );
     box-shadow: var( --b-shadow-hover );
+}
+
+.select {
+    display: inline-block;
+    width: 300px;
+    position: relative;
+    vertical-align: middle;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #aaa;
+    text-shadow: none;
+    border-radius: 4px;	
+    transition: box-shadow 0.25s ease;
+    z-index: 2;
+}
+
+.select:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.select:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #ccc;
+    top: 14px;
+    right: 10px;
+    cursor: pointer;
+    z-index: -2;
+}
+.select select {
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select select:focus {
+    outline: none;
 }
 
 .switches
