@@ -1,4 +1,4 @@
-源链接：https://github.com/StyleShit/Quantum-Hackbar
+原链接：https://github.com/StyleShit/Quantum-Hackbar
 
 修改了外观，后续再加修改头的新功能
 
@@ -6,3 +6,9 @@
 
 Chrome的New Hackbar做的感觉挺好
 
+原README：
+
+Quantum Hackbar - Under Construction
+=
+
+Download from [here](https://addons.mozilla.org/en-US/firefox/addon/quantum-hackbar/)
